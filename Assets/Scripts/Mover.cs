@@ -13,6 +13,7 @@ public class Mover : MonoBehaviour
         {
             MoveToCursor();
         }
+        UpdateAnimator();
     }
 
     private void MoveToCursor() // Using ray casts to move about world
@@ -24,5 +25,12 @@ public class Mover : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().destination = hit.point; //calls the position of the ray cast hit and moves to it
         }
+    }
+    private void UpdateAnimator()
+    {
+        Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity); //takes global distance converts to local
+        float speed = localVelocity.z;
+        GetComponent<Animator>().SetFloat("forwardSpeed", speed);
     }
 }
