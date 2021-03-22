@@ -9,14 +9,17 @@ namespace RPG.Movement
         [SerializeField] Transform target;
 
         NavMeshAgent navMeshAgent;
+        Health health;
 
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>(); //makes sure nav mech is applyed to player at the start
+            health = GetComponent<Health>();
         }
 
         void Update()
         {
+            navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator(); //in update as constantly using rest animation
         }
 
