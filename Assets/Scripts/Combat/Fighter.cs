@@ -1,17 +1,37 @@
 ﻿using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
+using RPG.Resources;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction //nned to implement IAction interface for code to obey its contract i.e. Cancel
     {
-        [SerializeField] float weaponRange = 2f;
+        
         [SerializeField] float timeBetweenAttacks = 1f; //adds a pause between animations
-        [SerializeField] float weaponDamage = 5f;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
 
         Health target;
-        float timeSinceLastAttack = Mathf.Infinity; 
+        float timeSinceLastAttack = Mathf.Infinity;
+        Weapon currentWeapon = null;
+
+        private void Start()
+        {
+            EquipWeapon(defaultWeapon);
+        }
+        public void EquipWeapon(Weapon weapon)
+        {
+            currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+        }
+
+        public Health GetTarget()
+        {
+            return target;
+        }
 
         private void Update()
         {
@@ -49,7 +69,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange; //check if distance is greater than attack range
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange(); //check if distance is greater than attack range
         }
         public bool CanAttack(GameObject combatTarget)
         {
@@ -69,6 +89,7 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
             StopAttack();
             target = null;
+            GetComponent<Mover>().Cancel();
         }
 
         private void StopAttack()
@@ -81,7 +102,22 @@ namespace RPG.Combat
         void Hit() // calls attack animation-animator
         {
             if (target == null) { return; }
-            target.TakeDamage(weaponDamage);
+
+            if (currentWeapon.HasProjectile())
+            {
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
+            }
+            else
+            {
+                target.TakeDamage(gameObject, currentWeapon.GetDamage());
+            }
+
         }
+
+        void Shoot()
+        {
+            Hit();
+        }
+
     }
 }

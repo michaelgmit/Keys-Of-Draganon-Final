@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdc0ce89a6c3944f8a43efdb05e40f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 2
   timeBetweenAttacks: 1
-  weaponDamage: 5
+  rightHandTransform: {fileID: 0}
+  leftHandTransform: {fileID: 0}
+  defaultWeapon: {fileID: 0}
 --- !u!114 &245646172497748294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +75,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5901123142df54b973fcb9d5eb6f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  healthPoints: 100
+--- !u!114 &5316882345964883963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303944144197052619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04537e13d786ef847907d8572c4dc94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingLevel: 1
+  characterClass: 1
+  progression: {fileID: 11400000, guid: 9b361e1b81eac5b4a837e8a6bbbd8573, type: 2}
 --- !u!1001 &1303944144197125033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +177,10 @@ PrefabInstance:
     - target: {fileID: 9505156, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
       propertyPath: m_CullingMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9505156, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 13707166, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
       propertyPath: m_AABB.m_Extent.y

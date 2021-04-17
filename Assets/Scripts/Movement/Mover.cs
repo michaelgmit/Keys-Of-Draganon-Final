@@ -1,6 +1,7 @@
 ﻿using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Resources;
 
 namespace RPG.Movement
 {
