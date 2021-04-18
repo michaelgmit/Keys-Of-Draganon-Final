@@ -4,12 +4,23 @@ using RPG.Movement;
 using RPG.Core;
 using UnityEngine;
 using RPG.Resources;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
         Health health;
+
+        [System.Serializable]
+        struct CursorMapping
+        {
+            public CursorType type;
+            public Texture2D texture;
+            public Vector2 hotspot;
+        }
+        [SerializeField] CursorMapping[] cursorMappings = null;
+
 
         private void Start()
         {
@@ -18,30 +29,58 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (health.IsDead()) return;
-            if (InteractWithCombat()) return;
+            if (InteractWithUI()) return;
+            if (health.IsDead())
+            {
+                SetCursor(CursorType.None);
+                return;
+            }
+
+            if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
+
+            SetCursor(CursorType.None);
+
         }
 
-        private bool InteractWithCombat()
+        private bool InteractWithUI()
         {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay()); //array of ray cast hits
-            foreach (RaycastHit hit in hits) //adds each hit to array 
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>(); //
-                if (target == null) continue;
-
-                if (!GetComponent<Fighter>().CanAttack(target.gameObject))
-                {
-                    continue;
-                }
-                if (Input.GetMouseButtonDown(0))
-                {
-                    GetComponent<Fighter>().Attack(target.gameObject);
-                }
+                SetCursor(CursorType.UI); //changes cursor when hovering over UI
                 return true;
             }
             return false;
+        }
+
+        private bool InteractWithComponent()
+        {
+            RaycastHit[] hits = RaycastAllSorted(); //array of ray cast hits
+            foreach (RaycastHit hit in hits) //adds each hit to array 
+            {
+                IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
+                foreach (IRaycastable raycastable in raycastables)
+                {
+                    if (raycastable.HandleRaycast(this)) //raycast handeler
+                    {
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        RaycastHit[] RaycastAllSorted()
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay()); //recives all hits by the raycast
+            float[] distances = new float[hits.Length];
+            for (int i = 0; i < hits.Length; i++) //discovers the distance of all hits and sorts them
+            {
+                distances[i] = hits[i].distance; //returns the ray with correct distance
+            }
+            Array.Sort(distances, hits); //sorts the hits
+            return hits;
         }
 
         private bool InteractWithMovement()
@@ -54,9 +93,27 @@ namespace RPG.Control
                 {
                     GetComponent<Mover>().StartMoveAction(hit.point); //starts the movement of player calling to mover scritp
                 }
+                SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
+        }
+        private void SetCursor(CursorType type)
+        {
+            CursorMapping mapping = GetCursorMapping(type);
+            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type)
+        {
+            foreach (CursorMapping mapping in cursorMappings)
+            {
+                if (mapping.type == type)
+                {
+                    return mapping;
+                }
+            }
+            return cursorMappings[0];
         }
 
         private static Ray GetMouseRay() //sends camera to position of each ray cast
