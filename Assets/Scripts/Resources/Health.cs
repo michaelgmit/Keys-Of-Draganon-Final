@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using RPG.Stats;
 using RPG.Core;
+using System;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace RPG.Resources
 {
     public class Health : MonoBehaviour
     {
         [SerializeField] float healthPoints = 100f;
-        int add = 20;
+        [SerializeField] UnityEvent takeDamage;
+        [SerializeField] UnityEvent onDie;
 
 
         bool isDead = false;
@@ -28,8 +32,14 @@ namespace RPG.Resources
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints == 0)
             {
+                onDie.Invoke();
                 Die(); //calls the die function when health = 0
                 AwardExperience(instigator);
+                SceneManager.LoadScene("gameover");
+            }
+            else
+            {
+                takeDamage.Invoke();
             }
         }
 
@@ -39,6 +49,11 @@ namespace RPG.Resources
             if (experience == null) return;
 
             experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+        }
+
+        public void Heal(float healthToRestore)
+        {
+            healthPoints = Mathf.Min(healthPoints + healthToRestore);
         }
 
         public float GetPercentage()

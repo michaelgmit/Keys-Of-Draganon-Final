@@ -29,7 +29,6 @@ namespace RPG.Control
 
         private void Update()
         {
-           // if (InteractWithUI()) return;
             if (health.IsDead())
             {
                 SetCursor(CursorType.None);
@@ -43,15 +42,6 @@ namespace RPG.Control
 
         }
 
-        //private bool InteractWithUI()
-        //{
-       //     if (EventSystem.current.IsPointerOverGameObject())
-      //      {
-       //         SetCursor(CursorType.UI); //changes cursor when hovering over UI
-         //       return true;
-       //     }
-      //      return false;
-      //  }
 
         private bool InteractWithComponent()
         {
