@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Darkball
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: b6935a8df7ba3eb4395c1cf3444aa168, type: 2}
-  equippedPrefab: {fileID: 0}
-  weaponDamage: 10
-  weaponRange: 20
+  equippedPrefab: {fileID: 8204421634729534122, guid: 688d5bb02e4db054584bf9a17f7d8a68,
+    type: 3}
+  weaponDamage: 40
+  weaponRange: 13
   isRightHanded: 0
   projectile: {fileID: 3382555078348169059, guid: bc14a57fac3503742af3b04b8fd36452,
     type: 3}

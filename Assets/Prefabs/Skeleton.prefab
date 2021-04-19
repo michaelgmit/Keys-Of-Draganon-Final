@@ -3437,7 +3437,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.14
+  m_Radius: 0.41
   m_Height: 2.27
   m_Direction: 1
   m_Center: {x: 0, y: 0.74, z: 0}
@@ -3505,6 +3505,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 10
+  takeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5178778026587048136
 MonoBehaviour:
   m_ObjectHideFlags: 0
