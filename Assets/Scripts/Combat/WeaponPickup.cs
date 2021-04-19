@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Resources;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -11,8 +12,14 @@ namespace RPG.Combat
         [SerializeField] Weapon weapon = null;
         [SerializeField] float healthToRestore = 0;
         [SerializeField] float respawnTime = 5;
+        [SerializeField] UnityEvent onHit;
 
-        private void OnTriggerEnter(Collider other)
+        public void OnHit()
+        {
+            onHit.Invoke();
+        }
+   
+    private void OnTriggerEnter(Collider other)
         {
              if (other.gameObject.tag == "Player")
             {

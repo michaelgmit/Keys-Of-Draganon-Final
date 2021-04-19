@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
 using RPG.Resources;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -15,8 +16,11 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
+       
 
         const string weaponName = "Weapon";
+
+
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {

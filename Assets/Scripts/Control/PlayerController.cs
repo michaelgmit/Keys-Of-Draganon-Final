@@ -5,6 +5,7 @@ using RPG.Core;
 using UnityEngine;
 using RPG.Resources;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace RPG.Control
 {
@@ -32,7 +33,10 @@ namespace RPG.Control
             if (health.IsDead())
             {
                 SetCursor(CursorType.None);
+                SceneManager.LoadScene("gameover");
+
                 return;
+
             }
 
             if (InteractWithComponent()) return;
