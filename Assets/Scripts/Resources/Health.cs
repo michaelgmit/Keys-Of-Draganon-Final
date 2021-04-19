@@ -35,7 +35,7 @@ namespace RPG.Resources
                 onDie.Invoke();
                 Die(); //calls the die function when health = 0
                 AwardExperience(instigator);
-                SceneManager.LoadScene("gameover");
+                //SceneManager.LoadScene("gameover");
             }
             else
             {

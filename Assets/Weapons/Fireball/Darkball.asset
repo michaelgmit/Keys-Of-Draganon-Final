@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: b6935a8df7ba3eb4395c1cf3444aa168, type: 2}
   equippedPrefab: {fileID: 0}
-  weaponDamage: 5
+  weaponDamage: 10
   weaponRange: 20
   isRightHanded: 0
   projectile: {fileID: 3382555078348169059, guid: bc14a57fac3503742af3b04b8fd36452,
