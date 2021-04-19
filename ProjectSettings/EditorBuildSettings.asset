@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Level2.unity
     guid: 4f8c422fddf322144ac33994f2632a00
   - enabled: 1
+    path: Assets/Scenes/bossfight.unity
+    guid: c75e2be13d67a844aaae06a97ce759c6
+  - enabled: 1
     path: Assets/Scenes/Menu Scenes/gameover.unity
     guid: 8606c3a2310529c48be2c999ab0e79b5
+  - enabled: 1
+    path: Assets/Scenes/Menu Scenes/WonGame.unity
+    guid: 9325ebe36a8beb24a8b077f83cf4ee86
   m_configObjects: {}
