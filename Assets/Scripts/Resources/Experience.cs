@@ -15,6 +15,7 @@ namespace RPG.Resources
 
             if(experiencePoints > 400)
             {
+ 
                 SceneManager.LoadScene("WonGame");
             }
         }
